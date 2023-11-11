@@ -35,45 +35,80 @@
                                             <h5 class="m-t-xs">Ubicación de Nuestros Locales - Lima</h5>
                                         </div>
                                     </div>
+                                    <form [formGroup]="tiendaForm" (ngSubmit)="agregarTienda()">
+                                        <div class="form-group">
+                                            <label>Latitud</label>
+                                            <input type="number" formControlName="lat"
+                                                class="form-control" placeholder="Ingresar Latitud">
+                                            <div class="text-danger"
+                                                *ngIf="tiendaForm.get('lat')?.hasError('required') && 
+                                                        tiendaForm.get('lat')?.touched">
+                                                <span>La latitud <strong>es obligatoria</strong></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Longitud</label>
+                                            <input type="number" formControlName="lng" 
+                                                class="form-control" placeholder="Ingresar longitud">
+                                            <div class="text-danger"
+                                                *ngIf="tiendaForm.get('lng')?.hasError('required') && 
+                                                    tiendaForm.get('lng')?.touched">
+                                                <span>La longitud <strong>es obligatoria</strong></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Title</label>
+                                            <input type="text" formControlName="title" 
+                                                class="form-control" placeholder="Ingresar title">
+                                            <div class="text-danger"
+                                                *ngIf="tiendaForm.get('title')?.hasError('required') && 
+                                                    tiendaForm.get('title')?.touched">
+                                                <span>El title <strong>es obligatorio</strong></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Información</label>
+                                            <input type="text" formControlName="info" 
+                                                class="form-control" placeholder="Ingresar Precio">
+                                            <div class="text-danger"
+                                                *ngIf="tiendaForm.get('info')?.hasError('required') && 
+                                                    tiendaForm.get('info')?.touched">
+                                                <span>La Información <strong>es obligatoria</strong></span>
+                                            </div>
+                                        </div>
+                                        <div  class="col-sm-12 text-right">
+                                            <div class="panel-body buttons-margin">
+                                               <button type="submit" class="btn btn-w-md btn-success">Guardar</button>&nbsp;&nbsp;
+                                               <button class="btn btn-w-md btn-warning" routerLink="/tiendas">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </form>    
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="col-md-12 col-sm-12" id="form" style="display:block;">
+                            <div class="panel panel-filled">
+                                <div class="panel-body">                          
                                     <div class="table-responsive">
                                         <table id="tableExample1" class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Departamento</th>
-                                                    <th>Distrito</th>
-                                                    <th>Cantidad</th>
+                                                    <th>Latitud</th>
+                                                    <th>Longitud</th>
+                                                    <th>Title</th>
+                                                    <th>Info</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Lima</td>
-                                                    <td>Santa Anita</td>
-                                                    <td>3</td>
+                                            <tbody id="datos">
+                                                <tr *ngFor="let tienda of listTiendas">
+                                                    <td>{{ tienda.lat }}</td>
+                                                    <td>{{ tienda.lng }}</td>
+                                                    <td>{{ tienda.title }}</td>
+                                                    <td>{{ tienda.info }}</td>
                                                     <td>
-                                                        <i style="font-size: 25px;" class="pe pe-7s-look text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lima</td>
-                                                    <td>San Miguel</td>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <i style="font-size: 25px;" class="pe pe-7s-look text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lima</td>
-                                                    <td>San Isidro</td>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <i style="font-size: 25px;" class="pe pe-7s-look text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
+                                                        <button (click)="eliminarTienda(tienda._id)" style="font-size: 25px;" class="pe pe-7s-trash text-accent"></button>&nbsp;&nbsp;
+                                                        <button style="font-size: 25px;" class="pe pe-7s-pen text-accent"></button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -82,6 +117,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 col-sm-12">
+                            <button style="text-align: center;" class="btn btn-w-md btn-danger" (click)="actualizarMapaConMarcadores()">Actualizar marcadores</button>&nbsp;&nbsp;
+                        </div>
+                            
                     </div>
                 </div>
             </div>

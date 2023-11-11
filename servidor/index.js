@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/api/productos', require('./routes/producto'));
 app.use('/api/login', require('./routes/usuario'));
 app.use('/api/create-user', require('./routes/usuario'));
-
+app.use('/api/tiendas', require('./routes/tienda'))
 
 
 app.listen(config.port, () => {
